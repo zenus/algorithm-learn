@@ -92,6 +92,40 @@
         return $dp;
     }
 
+   public function coins()
+    {
+        //硬币问题总兑换方法
+        $N = 10000;
+        $items = [1,2,3];
+        for($j=1; $j<=$N; $j++)
+        {
+            $dp[0][$j] = 1;
+        }
+        //如果n=0;不放任何硬币是一种方法
+        for($i=0; $i< count($items); $i++)
+        {
+            $dp[$i][0] = 1;
+        }
+        for($i=1; $i<count($items); $i++)
+        {
+            for($j=1; $j<=$N; $j++)
+            {
+                if($j / $items[$i] >=1)
+                {
+                    $sum = $dp[$i-1][$j];
+                    $num = floor($j / $items[$i]);
+                    for($k=1; $k<=$num; $k++)
+                    {
+                        $sum += $dp[$i-1][$j - $k * $items[$i]];
+                    }
+                    $dp[$i][$j] = $sum;
+                }else{
+                   $dp[$i][$j] = $dp[$i-1][$j];
+                }
+            }
+        }
+    }
+
 
     /**
      * @param $total
