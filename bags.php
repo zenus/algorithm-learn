@@ -167,4 +167,39 @@
         }
         return $dp;
     }
+
+   /**
+     * @desc 回文处理
+     * @param $backWords
+     */
+    public function getBackWordString($backWords)
+    {
+        $maxStr = '';
+        $dp = [];
+        $len = strlen($backWords);
+        for($i=0; $i<$len ; $i++)
+        {
+            $dp[$i][$i] = 1;
+            if(isset($backWords[$i]) and isset($backWords[$i+1]) and $backWords[$i] == $backWords[$i+1])
+            {
+                $dp[$i][$i+1] = 1;
+            }
+        }
+        for($i=0; $i<$len; $i++)
+        {
+           for($j=0; $j < $i; $j++)
+           {
+               if(isset($dp[$j+1][$i-1]) and $dp[$j+1][$i-1] ==1 and $backWords[$j] == $backWords[$i])
+               {
+                   $dp[$j][$i] = 1;
+                   if(($i-$j) > strlen($maxStr))
+                   {
+                       $maxStr = substr($backWords,$j,$i-$j + 1);
+                   }
+               }else{
+                  $dp[$j][$i] = 0;
+               }
+           }
+        }
+    }
     ?>
