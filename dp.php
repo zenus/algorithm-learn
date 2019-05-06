@@ -235,4 +235,27 @@
             }
         }
     }
+
+
+    function win()
+    {
+        //dp[i][j] 表示选择item[i:j]的差值
+        $dp = [];
+        $items = [1,3,4,2,5,6,7,8,9,4];
+        for($i=0;$i<count($items);$i++)
+        {
+            for($j=$i; $j < count($items); $j++)
+            {
+                if($j=$i)
+                {
+                   $dp[$i][$j]  = $items[$i];
+                }else{
+                    //    0 2                      0           1    2                    2      0    1
+                        //0 1                      0            1    1                   0       0    0
+                    $dp[$i][$j] = max($items[$i] - $dp[$i+1][$j], $items[$j]-$dp[$i][$j-1]);
+                }
+            }
+        }
+        var_dump($dp);
+    }
     ?>
