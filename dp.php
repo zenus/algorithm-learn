@@ -258,4 +258,27 @@
         }
         var_dump($dp);
     }
+   
+   function largestRectangleArea ()
+   {
+   //84. 柱状图中最大的矩形
+    $items = [2,1,5,6,2,3];
+$dp[0] = 2;
+$start = 0;
+ for($i=1;$i<count($items);$i++)
+ {
+	 $height = min($dp[$i-1] / ($i - $start),$items[$i]);
+	 $area = $height * ($i-$start+1);
+	 if($items[$i] >= $area)
+	 {
+             $start = $i;
+		 $dp[$i] = $items[$i];
+	 }else{
+	 $dp[$i] = $area;
+	 }
+ }
+var_dump($dp);
+   
+   }
+
     ?>
