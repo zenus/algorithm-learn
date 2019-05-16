@@ -281,4 +281,48 @@ var_dump($dp);
    
    }
 
+ function maximalRectangle ()
+    {
+        //85. 最大矩形
+        $items = [
+            ["1","0","1","0","0"],
+            ["1","0","1","1","1"],
+            ["1","1","1","1","1"],
+            ["1","0","0","1","0"]
+        ];
+        $maxArea = [];
+        //$db[$i,$j] 表示第i行第j列的高度
+        $db = [];
+        for ($i = 0; $i < count($items); $i++) {
+            $start = 0;
+            //dp[$j] 表示到第j列的最大面积
+            $dp = [];
+            for($j=0; $j <count($items[$i]); $j++)
+            {
+                if($items[$i][$j]==1)
+                {
+                   $db[$i][$j] = $db[$i-1][$j] + 1;
+                }elseif($items[$i][$j] == 0)
+                {
+                    $db[$i][$j] = 0;
+                }
+                if($j ==0)
+                {
+                   $dp[$j] = $dp[$i][$j];
+                }else{
+                    $height = min($dp[$j - 1] / ($j - $start), $db[$i][$j]);
+                    $area = $height * ($j - $start + 1);
+                    if ($db[$i][$j] >= $area) {
+                        $start = $j;
+                        $dp[$j] = $db[$i][$j];
+                    } else {
+                        $dp[$j] = $area;
+                    }
+                    $maxArea = max($maxArea,$dp[$j]);
+                }
+            }
+        }
+        var_dump($maxArea);
+    }
+
     ?>
